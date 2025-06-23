@@ -1,0 +1,26 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.nav-pills .nav-link {
+    color: #495057;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #0d6efd;
+}
+
+.results-container {
+    display: none;
+}
+
+.ai-explanation {
+    background-color: #f8f9fa;
+    border-radius: .25rem;
+    padding: 1.5rem;
+}
+
+.ai-explanation h1, .ai-explanation h2, .ai-explanation h3 {
+    margin-top: 1.5rem;
+    color: #0d6efd;
+}

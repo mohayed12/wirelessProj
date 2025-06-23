@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireless & Mobile Network Design Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body class="bg-light">
+
+    <div class="container my-5">
+        <div class="text-center mb-5">
+            <h1 class="display-5 fw-bold">Wireless Network Design Suite 🛰️</h1>
+            <p class="lead">An AI-powered tool for network design computations and explanations.</p>
+        </div>
+
+        <ul class="nav nav-pills nav-fill mb-4" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-wireless-tab" data-bs-toggle="pill" data-bs-target="#pills-wireless" type="button" role="tab" aria-controls="pills-wireless" aria-selected="true">Wireless Comm System</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-ofdm-tab" data-bs-toggle="pill" data-bs-target="#pills-ofdm" type="button" role="tab" aria-controls="pills-ofdm" aria-selected="false">OFDM Systems</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-linkbudget-tab" data-bs-toggle="pill" data-bs-target="#pills-linkbudget" type="button" role="tab" aria-controls="pills-linkbudget" aria-selected="false">Link Budget</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-cellular-tab" data-bs-toggle="pill" data-bs-target="#pills-cellular" type="button" role="tab" aria-controls="pills-cellular" aria-selected="false">Cellular Design</button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-wireless" role="tabpanel" aria-labelledby="pills-wireless-tab">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h3 class="card-title mb-4">Wireless Communication System Parameters</h3>
+                        <form id="wireless-form" class="row g-3">
+                            <div class="col-md-6"><div class="form-floating"><input type="number" class="form-control" id="f_max" value="4000" required><label for="f_max">Max Signal Freq. (Hz)</label></div></div>
+                            <div class="col-md-6"><div class="form-floating"><input type="number" class="form-control" id="bits_per_sample" value="8" required><label for="bits_per_sample">Bits per Sample</label></div></div>
+                            <div class="col-md-6"><div class="form-floating"><input type="number" class="form-control" id="source_coding_ratio" value="0.5" step="0.1" required><label for="source_coding_ratio">Source Coding Ratio</label></div></div>
+                            <div class="col-md-6"><div class="form-floating"><input type="number" class="form-control" id="channel_coding_rate" value="0.75" step="0.05" required><label for="channel_coding_rate">Channel Coding Rate</label></div></div>
+                            <div class="col-md-6"><div class="form-floating"><input type="number" class="form-control" id="interleaver_depth" value="1" required><label for="interleaver_depth">Interleaver Depth</label></div></div>
+                            <div class="col-md-6"><div class="form-floating"><input type="number" class="form-control" id="burst_overhead" value="10" required><label for="burst_overhead">Burst Overhead (%)</label></div></div>
+                            <div class="col-12 text-center mt-4"><button type="submit" class="btn btn-primary btn-lg px-5">Calculate</button></div>
+                        </form>
+                        <div class="results-container mt-4" id="wireless-results"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-ofdm" role="tabpanel" aria-labelledby="pills-ofdm-tab">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h3 class="card-title mb-4">OFDM System Parameters</h3>
+                        <form id="ofdm-form" class="row g-3">
+                            <div class="col-md-6"><div class="form-floating"><input type="number" class="form-control" id="num_subcarriers" value="1200" required><label for="num_subcarriers"># of Subcarriers</label></div></div>
+                            <div class="col-md-6"><div class="form-floating"><input type="number" class="form-control" id="bits_per_symbol" value="4" required><label for="bits_per_symbol">Modulation Bits/Symbol</label></div></div>
+                            <div class="col-md-6"><div class="form-floating"><input type="number" class="form-control" id="symbol_duration_us" value="71.4" step="any" required><label for="symbol_duration_us">Symbol Duration (μs)</label></div></div>
+                            <div class="col-md-6"><div class="form-floating"><input type="number" class="form-control" id="subcarriers_per_rb" value="12" required><label for="subcarriers_per_rb">Subcarriers per RB</label></div></div>
+                            <div class="col-md-6"><div class="form-floating"><input type="number" class="form-control" id="symbols_per_rb" value="7" required><label for="symbols_per_rb">Symbols per RB</label></div></div>
+                            <div class="col-md-6"><div class="form-floating"><input type="number" class="form-control" id="num_parallel_rb" value="100" required><label for="num_parallel_rb"># of Parallel RBs</label></div></div>
+                            <div class="col-md-6"><div class="form-floating"><input type="number" class="form-control" id="bandwidth_mhz" value="20" required><label for="bandwidth_mhz">Bandwidth (MHz)</label></div></div>
+                            <div class="col-12 text-center mt-4"><button type="submit" class="btn btn-primary btn-lg px-5">Calculate</button></div>
+                        </form>
+                        <div class="results-container mt-4" id="ofdm-results"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-linkbudget" role="tabpanel" aria-labelledby="pills-linkbudget-tab">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h3 class="card-title mb-4">Link Budget Calculation</h3>
+                        <form id="link-budget-form" class="row g-3">
+                            <div class="col-md-6"><div class="form-floating"><input type="number" class="form-control" id="distance_km" value="10" step="any" required><label for="distance_km">Distance (km)</label></div></div>
+                            <div class="col-md-6"><div class="form-floating"><input type="number" class="form-control" id="frequency_mhz" value="2400" step="any" required><label for="frequency_mhz">Frequency (MHz)</label></div></div>
+                            <div class="col-md-6"><div class="form-floating"><input type="number" class="form-control" id="tx_power_dbm" value="20" step="any" required><label for="tx_power_dbm">Transmit Power (dBm)</label></div></div>
+                            <div class="col-md-6"><div class="form-floating"><input type="number" class="form-control" id="tx_gain_dbi" value="5" step="any" required><label for="tx_gain_dbi">Transmitter Gain (dBi)</label></div></div>
+                            <div class="col-md-6"><div class="form-floating"><input type="number" class="form-control" id="rx_gain_dbi" value="5" step="any" required><label for="rx_gain_dbi">Receiver Gain (dBi)</label></div></div>
+                            <div class="col-12 text-center mt-4"><button type="submit" class="btn btn-primary btn-lg px-5">Calculate</button></div>
+                        </form>
+                        <div class="results-container mt-4" id="link-budget-results"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-cellular" role="tabpanel" aria-labelledby="pills-cellular-tab">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h3 class="card-title mb-4">Cellular System Design</h3>
+                        <form id="cellular-form" class="row g-3">
+                            <div class="col-md-6"><div class="form-floating"><input type="number" class="form-control" id="total_area_sqkm" value="1000" required><label for="total_area_sqkm">Total Coverage Area (sq. km)</label></div></div>
+                            <div class="col-md-6"><div class="form-floating"><input type="number" class="form-control" id="cell_radius_km" value="2" step="any" required><label for="cell_radius_km">Cell Radius (km)</label></div></div>
+                            <div class="col-md-6"><div class="form-floating"><input type="number" class="form-control" id="cluster_size" value="7" required><label for="cluster_size">Cluster Size (N)</label></div></div>
+                            <div class="col-md-6"><div class="form-floating"><input type="number" class="form-control" id="channels_per_cell" value="50" required><label for="channels_per_cell">Channels per Cell</label></div></div>
+                            <div class="col-12 text-center mt-4"><button type="submit" class="btn btn-primary btn-lg px-5">Calculate</button></div>
+                        </form>
+                        <div class="results-container mt-4" id="cellular-results"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center text-muted mt-5">
+            <p>&copy; 2025 Wireless and Mobile Networking Project</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+</html>

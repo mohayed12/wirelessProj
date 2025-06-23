@@ -1,0 +1,36 @@
+to run the application:
+
+1. first go to the backend directory in the terminal:
+cd <path-to-project>\wirelessProj\backend
+
+then run this command:
+pip install -r backend/requirements.txt
+
+wait for instalation of the python packages
+
+2. then you need to get a google api token
+
+go to https://aistudio.google.com/app/u/3/apikey
+
+sign in if needed
+click on create API key at the top right, and copy the token, then go to backend/app.py and paste the token into:
+
+line 9: GEMINI_API_KEY = "YOUR_GOOGLE_API_TOKEN"
+
+then run app.py, and you should get:
+
+ * Serving Flask app 'app'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 887-664-682
+
+ copy the backend link (in my case "http://127.0.0.1:5000")
+ and paste it to the script.js at:
+
+ line 2:     const API_BASE_URL = 'http://127.0.0.1:5000/api';
+
+ make sure to add "/api" after the link
