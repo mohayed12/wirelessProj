@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const API_BASE_URL = 'http://127.0.0.1:5000/api';
+    const API_BASE_URL = 'https://wirelessproj.onrender.com/';
 
     setupForm('wireless-form', `${API_BASE_URL}/wireless`, [
         'f_max', 'bits_per_sample', 'source_coding_ratio',
